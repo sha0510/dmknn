@@ -14,8 +14,10 @@ public class Attribute {
 
 	/** Only for nominal features */
 	private Vector<String> attribute_values;
-	
-	private Vector<Integer> value_count;
+
+	private DataSet dataset;
+
+	private Vector<Integer> nominal_count;
 	private double numeric_total;
 
 	private Hashtable<String, Integer> hashtable;
@@ -91,7 +93,33 @@ public class Attribute {
 	}
 
 	public double getMissingValue() {
-		// TODO Auto-generated method stub
-		return null;
+		if (attribute_type == NOMINAL_TYPE) {
+			int max = 0;
+			int max_i = -1;
+			for (int i = 0; i < nominal_count.size(); i++) {
+				int count = nominal_count.get(i);
+				if (count > max) {
+					max = count;
+					max_i = i;
+				}
+			}
+			return max_i;
+		} else
+			return numeric_total / dataset.getSize();
+	}
+
+	public void incrementValue(double value) {
+		if (attribute_type == NOMINAL_TYPE)
+			nominal_count.set((int) value, nominal_count.get((int) value) + 1);
+		else
+			numeric_total += value;
+	}
+
+	public DataSet getDataset() {
+		return dataset;
+	}
+
+	public void setDataset(DataSet dataset) {
+		this.dataset = dataset;
 	}
 }
