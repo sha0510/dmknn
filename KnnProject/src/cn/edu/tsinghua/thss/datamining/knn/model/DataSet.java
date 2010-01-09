@@ -41,10 +41,6 @@ public class DataSet {
 		this.instances = instances;
 	}
 
-	public void addFeature(Attribute attr) {
-		features.add(attr);
-	}
-
 	public void addInstance(Instance instance) {
 		instances.add(instance);
 	}
