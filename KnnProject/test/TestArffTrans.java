@@ -13,7 +13,7 @@ public class TestArffTrans {
          Vector<Attribute> features=ds.getFeatures();
          for(int i=0;i<features.size();i++)
          {
-        	 System.out.println(features.get(i));
+        	 System.out.println(features.get(i).getAttribute_name());
          }
      }
 
