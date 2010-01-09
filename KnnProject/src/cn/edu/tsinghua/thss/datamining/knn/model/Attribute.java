@@ -33,6 +33,7 @@ public class Attribute {
 		this.attribute_type = type;
 
 		if (type == NUMERIC_TYPE) {
+			attribute_values = null;
 			return;
 		}
 
@@ -121,5 +122,16 @@ public class Attribute {
 
 	public void setDataset(DataSet dataset) {
 		this.dataset = dataset;
+	}
+
+	public String toString() {
+		String text = "Name:" + attribute_name + " Type:"
+				+ (attribute_type == 0 ? "Numeric" : "Nominal");
+		if (attribute_values != null) {
+			text += " Values:";
+			for (String value : attribute_values)
+				text += value + " ";
+		}
+		return text;
 	}
 }
