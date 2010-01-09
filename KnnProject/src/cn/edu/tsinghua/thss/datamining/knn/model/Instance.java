@@ -7,6 +7,11 @@ public class Instance {
 	private DataSet dataset;
 	private double label;
 
+	public Instance(Vector<Double> feature_values, double label) {
+		this.feature_values = feature_values;
+		this.label = label;
+	}
+
 	public Vector<Double> getFeature_values() {
 		return feature_values;
 	}
