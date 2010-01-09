@@ -48,4 +48,13 @@ public class Instance {
 		feature_values.set(i, value);
 	}
 
+	public String toString() {
+		String text = "<";
+		for (double value : feature_values)
+			text += value + ",";
+		text += label;
+		text += ">";
+		return text;
+	}
+
 }
