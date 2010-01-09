@@ -13,6 +13,8 @@ public class DataSet {
 
 	public DataSet(Vector<Attribute> features, Attribute target) {
 		this.features = features;
+		for (Attribute attr : features)
+			attr.setDataset(this);
 		this.target = target;
 		this.feature_missing_values = new Vector<Double>();
 		size = 0;
