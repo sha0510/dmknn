@@ -22,9 +22,11 @@ public class Attribute {
 
 	private Hashtable<String, Integer> hashtable;
 
+	private int num_intervals;
 	private double lower_bound;
-
 	private double upper_bound;
+	private double[] lower_bounds;
+	private double[] upper_bounds;
 
 	public Attribute(String attribute_name, int type,
 			Vector<String> attribute_values) {
@@ -34,6 +36,7 @@ public class Attribute {
 
 		if (type == NUMERIC_TYPE) {
 			attribute_values = null;
+			num_intervals = 1;
 			return;
 		}
 
@@ -133,5 +136,36 @@ public class Attribute {
 				text += value + " ";
 		}
 		return text;
+	}
+
+	public boolean checkLabelEquals(double a, double b) {
+		if (attribute_type == NOMINAL_TYPE)
+			return a == b;
+		else
+			return (a - b) * (a - b) < 0.1;
+	}
+
+	public int getNum_intervals() {
+		return num_intervals;
+	}
+
+	public void setNum_intervals(int numIntervals) {
+		num_intervals = numIntervals;
+	}
+
+	public int getLabelClass(double label) {
+		if (attribute_type == NOMINAL_TYPE)
+			return (int) label;
+		else {
+			for (int i = 0; i < num_intervals; i++)
+				if (label > lower_bounds[i] && label < upper_bounds[i])
+					return i;
+		}
+		throw new IllegalArgumentException("Label out of bound!");
+	}
+
+	public int getLabelNum() {
+		return attribute_type == NOMINAL_TYPE ? attribute_values.size()
+				: num_intervals;
 	}
 }
