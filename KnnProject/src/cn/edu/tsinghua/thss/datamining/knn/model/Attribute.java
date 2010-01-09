@@ -14,6 +14,9 @@ public class Attribute {
 
 	/** Only for nominal features */
 	private Vector<String> attribute_values;
+	
+	private Vector<Integer> value_count;
+	private double numeric_total;
 
 	private Hashtable<String, Integer> hashtable;
 
@@ -85,5 +88,10 @@ public class Attribute {
 
 	public void setAttribute_type(int attributeType) {
 		attribute_type = attributeType;
+	}
+
+	public double getMissingValue() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
