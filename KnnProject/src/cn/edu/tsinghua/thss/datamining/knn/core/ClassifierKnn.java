@@ -31,6 +31,8 @@ public abstract class ClassifierKnn {
 					neighbors.insertElementAt(newinstance, i);
 					distances.insertElementAt(distance, i);
 				}
+				if (neighbors.size() > k)
+					neighbors.remove(neighbors.size() - 1);
 			}
 		}
 
