@@ -7,19 +7,22 @@ import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
 
 public abstract class ClassifierKnn {
 	private int k;
-	private DataSet trainingset;
+	protected DataSet trainingset;
+	private int weight_type;
+	
+	public static final int WEIGHT_NONE=1;
+	public static final int WEIGHT_INVERSE=2;
+	public static final int WEIGHT_SIMILARITY=3;
 
 	public ClassifierKnn(int k, DataSet trainingset) {
 		if (k <= 0)
 			throw new IllegalArgumentException("K must be greater than zero!");
 		this.k = k;
 		this.trainingset = trainingset;
+		this.weight_type=WEIGHT_NONE;
 	}
 
-	public double classifyNewInstance(Instance newinstance) {
-
-		return 0;
-	}
+	public abstract double classifyNewInstance(Instance newinstance) ;
 
 	public Vector<Instance> getNearestNeighbours(Instance newinstance) {
 		Vector<Instance> neighbors = new Vector<Instance>();
