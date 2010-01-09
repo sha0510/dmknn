@@ -34,6 +34,10 @@ public class Evaluator {
 				confusion_matrix[label_class][label_class]++;
 			else
 				confusion_matrix[check_class][label_class]++;
+
 		}
+		EvaluationResult result = new EvaluationResult(confusion_matrix,
+				testset.getSize());
+		return result;
 	}
 }
