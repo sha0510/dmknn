@@ -7,12 +7,14 @@ import java.util.Vector;
 public class DataSet {
 	private int size;
 	private Vector<Attribute> features;
+	private Vector<Double> feature_missing_values;
 	private Attribute target;
 	private List<Instance> instances;
 
 	public DataSet(Vector<Attribute> features, Attribute target) {
 		this.features = features;
 		this.target = target;
+		this.feature_missing_values = new Vector<Double>();
 		size = 0;
 		instances = new ArrayList<Instance>();
 	}
@@ -51,6 +53,17 @@ public class DataSet {
 
 	public void addInstance(Instance instance) {
 		instances.add(instance);
+		instance.setDataset(this);
 		size++;
+	}
+
+	public void replaceMissingValues() {
+		for (int i = 0; i < features.size(); i++)
+			feature_missing_values.set(i, features.get(i).getMissingValue());
+		for (int i = 0; i < instances.size(); i++) {
+			Instance instance = instances.get(i);
+			if (instance.isMissing(i))
+				instance.setValue(i, features.get(i).getMissingValue());
+		}
 	}
 }
