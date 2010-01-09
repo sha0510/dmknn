@@ -17,7 +17,7 @@ public class Attribute {
 
 	private DataSet dataset;
 
-	private Vector<Integer> nominal_count;
+	private int[] nominal_count;
 	private double numeric_total;
 
 	private Hashtable<String, Integer> hashtable;
@@ -37,18 +37,22 @@ public class Attribute {
 		if (type == NUMERIC_TYPE) {
 			attribute_values = null;
 			num_intervals = 1;
-			return;
-		}
-
-		hashtable = new Hashtable<String, Integer>();
-		for (int i = 0; i < attribute_values.size(); i++) {
-			String value = attribute_values.get(i);
-			if (hashtable.containsKey(value)) {
-				throw new IllegalArgumentException("A nominal attribute ("
-						+ attribute_name + ") cannot"
-						+ " have duplicate labels (" + value + ").");
+			numeric_total = 0;
+		} else {
+			int size = attribute_values.size();
+			nominal_count = new int[size];
+			for (int i = 0; i < size; i++)
+				nominal_count[i] = 0;
+			hashtable = new Hashtable<String, Integer>();
+			for (int i = 0; i < size; i++) {
+				String value = attribute_values.get(i);
+				if (hashtable.containsKey(value)) {
+					throw new IllegalArgumentException("A nominal attribute ("
+							+ attribute_name + ") cannot"
+							+ " have duplicate labels (" + value + ").");
+				}
+				hashtable.put(value, i);
 			}
-			hashtable.put(value, i);
 		}
 	}
 
@@ -100,8 +104,8 @@ public class Attribute {
 		if (attribute_type == NOMINAL_TYPE) {
 			int max = 0;
 			int max_i = -1;
-			for (int i = 0; i < nominal_count.size(); i++) {
-				int count = nominal_count.get(i);
+			for (int i = 0; i < nominal_count.length; i++) {
+				int count = nominal_count[i];
 				if (count > max) {
 					max = count;
 					max_i = i;
@@ -114,7 +118,7 @@ public class Attribute {
 
 	public void incrementValue(double value) {
 		if (attribute_type == NOMINAL_TYPE)
-			nominal_count.set((int) value, nominal_count.get((int) value) + 1);
+			nominal_count[(int) value]++;
 		else
 			numeric_total += value;
 	}

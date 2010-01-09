@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
+import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
 
 public class TestClassiferKnn {
 	private static ClassifierKnn classifier;
@@ -17,6 +18,6 @@ public class TestClassiferKnn {
 
 	@Test
 	public void testClassifyNewInstance() {
-		
+		System.out.println(classifier.getTrainingset());
 	}
 }

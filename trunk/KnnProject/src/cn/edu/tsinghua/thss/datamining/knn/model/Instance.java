@@ -41,7 +41,7 @@ public class Instance {
 	public boolean isMissing(int i) {
 		if (i >= feature_values.size())
 			throw new IllegalArgumentException("Out of bound!");
-		return feature_values.get(i) == Double.NaN;
+		return feature_values.get(i).isNaN();
 	}
 
 	public void setValue(int i, double value) {
@@ -51,7 +51,7 @@ public class Instance {
 	public String toString() {
 		String text = "<";
 		for (double value : feature_values)
-			text += value + ",";
+			text += value + "\t";
 		text += label;
 		text += ">";
 		return text;

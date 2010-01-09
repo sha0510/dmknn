@@ -19,6 +19,7 @@ public abstract class ClassifierKnn {
 			throw new IllegalArgumentException("K must be greater than zero!");
 		this.k = k;
 		this.trainingset = trainingset;
+		trainingset.replaceMissingValues();
 		this.weight_type=WEIGHT_NONE;
 	}
 

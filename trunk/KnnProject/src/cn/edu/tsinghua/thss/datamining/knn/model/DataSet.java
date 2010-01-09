@@ -57,15 +57,27 @@ public class DataSet {
 		instances.add(instance);
 		instance.setDataset(this);
 		size++;
+		for (int i = 0; i < features.size(); i++) {
+			features.get(i).incrementValue(instance.getFeature_values().get(i));
+		}
 	}
 
 	public void replaceMissingValues() {
 		for (int i = 0; i < features.size(); i++)
-			feature_missing_values.set(i, features.get(i).getMissingValue());
-		for (int i = 0; i < instances.size(); i++) {
-			Instance instance = instances.get(i);
-			if (instance.isMissing(i))
-				instance.setValue(i, features.get(i).getMissingValue());
+			feature_missing_values.add(features.get(i).getMissingValue());
+
+		for (Double missing_value : feature_missing_values)
+			System.out.print( missing_value+"\t");
+		System.out.println();
+
+		for (Instance instance : instances) {
+			System.out.println(instance);
+			for (int j = 0; j < features.size(); j++) {
+				if (instance.isMissing(j))
+					instance.setValue(j, features.get(j).getMissingValue());
+			}
+			System.out.println( instance);
+			System.out.println();
 		}
 	}
 }
