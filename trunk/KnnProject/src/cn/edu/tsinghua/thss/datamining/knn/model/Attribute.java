@@ -21,15 +21,12 @@ public class Attribute {
 
 	private double upper_bound;
 
-	public Attribute(String attribute_name) {
-		this(attribute_name, null);
-	}
-
-	public Attribute(String attribute_name, Vector<String> attribute_values) {
+	public Attribute(String attribute_name, int type,
+			Vector<String> attribute_values) {
 		this.attribute_name = attribute_name;
 		this.attribute_values = attribute_values;
 
-		if (attribute_values == null) {
+		if (type == NUMERIC_TYPE) {
 			return;
 		}
 
