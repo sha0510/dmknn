@@ -9,6 +9,12 @@ public class DataSet {
 	private Attribute target;
 	private List<Instance> instances;
 
+	public DataSet(Vector<Attribute> features, Attribute target) {
+		this.features = features;
+		this.target = target;
+		size = 0;
+	}
+
 	public int getSize() {
 		return size;
 	}
@@ -43,5 +49,6 @@ public class DataSet {
 
 	public void addInstance(Instance instance) {
 		instances.add(instance);
+		size ++;
 	}
 }
