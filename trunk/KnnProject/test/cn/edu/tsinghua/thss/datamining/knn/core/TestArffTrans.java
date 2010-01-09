@@ -1,7 +1,6 @@
 package cn.edu.tsinghua.thss.datamining.knn.core;
 import java.util.Vector;
 
-import cn.edu.tsinghua.thss.datamining.knn.core.ArffTransformer;
 import cn.edu.tsinghua.thss.datamining.knn.model.Attribute;
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
 import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
