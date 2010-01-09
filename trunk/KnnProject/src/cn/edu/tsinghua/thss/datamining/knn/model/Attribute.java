@@ -4,7 +4,13 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 public class Attribute {
+
+	public final static int NUMERIC_TYPE = 0;
+	public final static int NOMINAL_TYPE = 0;
+
 	private String attribute_name;
+
+	private int attribute_type;
 
 	/** Only for nominal features */
 	private Vector<String> attribute_values;
@@ -73,5 +79,13 @@ public class Attribute {
 
 	public void setUpper_bound(double upperBound) {
 		upper_bound = upperBound;
+	}
+
+	public int getAttribute_type() {
+		return attribute_type;
+	}
+
+	public void setAttribute_type(int attributeType) {
+		attribute_type = attributeType;
 	}
 }
