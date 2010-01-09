@@ -25,6 +25,7 @@ public class Attribute {
 			Vector<String> attribute_values) {
 		this.attribute_name = attribute_name;
 		this.attribute_values = attribute_values;
+		this.attribute_type = type;
 
 		if (type == NUMERIC_TYPE) {
 			return;
