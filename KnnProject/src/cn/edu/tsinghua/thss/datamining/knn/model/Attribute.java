@@ -1,4 +1,4 @@
-package cn.edu.tsinghua.thss.datamining.knn.core;
+package cn.edu.tsinghua.thss.datamining.knn.model;
 
 import java.util.Hashtable;
 import java.util.Vector;

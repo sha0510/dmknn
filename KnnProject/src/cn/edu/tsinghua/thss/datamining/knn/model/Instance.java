@@ -1,4 +1,4 @@
-package cn.edu.tsinghua.thss.datamining.knn;
+package cn.edu.tsinghua.thss.datamining.knn.model;
 
 import java.util.Vector;
 
