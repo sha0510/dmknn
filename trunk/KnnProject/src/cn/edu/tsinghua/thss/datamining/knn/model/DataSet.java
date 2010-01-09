@@ -40,4 +40,12 @@ public class DataSet {
 	public void setInstances(List<Instance> instances) {
 		this.instances = instances;
 	}
+
+	public void addFeature(Attribute attr) {
+		features.add(attr);
+	}
+
+	public void addInstance(Instance instance) {
+		instances.add(instance);
+	}
 }
