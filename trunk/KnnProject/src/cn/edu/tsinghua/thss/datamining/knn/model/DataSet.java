@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.thss.datamining.knn.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,6 +14,7 @@ public class DataSet {
 		this.features = features;
 		this.target = target;
 		size = 0;
+		instances = new ArrayList<Instance>();
 	}
 
 	public int getSize() {
@@ -49,6 +51,6 @@ public class DataSet {
 
 	public void addInstance(Instance instance) {
 		instances.add(instance);
-		size ++;
+		size++;
 	}
 }
