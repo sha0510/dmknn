@@ -6,7 +6,7 @@ import java.util.Vector;
 public class Attribute {
 
 	public final static int NUMERIC_TYPE = 0;
-	public final static int NOMINAL_TYPE = 0;
+	public final static int NOMINAL_TYPE = 1;
 
 	private String attribute_name;
 
