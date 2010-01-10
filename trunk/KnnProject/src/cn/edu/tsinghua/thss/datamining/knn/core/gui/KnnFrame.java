@@ -11,11 +11,17 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import cn.edu.tsinghua.thss.datamining.knn.control.ClassifierControl;
+import cn.edu.tsinghua.thss.datamining.knn.core.ClassifierKnn;
+import cn.edu.tsinghua.thss.datamining.knn.evaluate.EvaluationResult;
 
 public class KnnFrame extends JFrame implements ActionListener {
 
@@ -25,17 +31,19 @@ public class KnnFrame extends JFrame implements ActionListener {
 	private JFileChooser testfc;
 	private JTextField kinput;
 	private JComboBox weightchooser;
+	private JTextArea outputarea;
 
 	private String train_file;
 	private String test_file;
-	private int k;
-	private int weight_type;
+	private int k = 1;
+	private int weight_type = ClassifierKnn.WEIGHT_NONE;
 
 	public KnnFrame() {
 		this.setTitle("KNN Classifier");
-		this.setSize(new Dimension(600, 600));
+		this.setSize(new Dimension(800, 600));
 		this.setLocation(200, 50);
 		this.setLayout(new BorderLayout());
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e1) {
@@ -49,6 +57,7 @@ public class KnnFrame extends JFrame implements ActionListener {
 		}
 
 		JPanel inputPanel = new JPanel();
+		inputPanel.setSize(600, 200);
 
 		JButton trainfcbutton = new JButton("Select training file");
 		JButton testfcbutton = new JButton("Select testing file");
@@ -79,11 +88,53 @@ public class KnnFrame extends JFrame implements ActionListener {
 				}
 			}
 		});
+		JLabel klabel = new JLabel("KNN:");
+		kinput = new JTextField("1", 5);
+		kinput.setSize(40, 20);
+		String[] weight_types = { "None", "Inverse", "Similarity" };
+		weightchooser = new JComboBox(weight_types);
+		weightchooser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String type_str = (String) weightchooser.getSelectedItem();
+				if (type_str.equals("None"))
+					weight_type = ClassifierKnn.WEIGHT_NONE;
+				else if (type_str.equals("Inverse"))
+					weight_type = ClassifierKnn.WEIGHT_INVERSE;
+				else
+					weight_type = ClassifierKnn.WEIGHT_SIMILARITY;
+			}
+		});
+		JButton startbutton = new JButton("Start");
+		startbutton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				k = Integer.parseInt(kinput.getText());
+				System.out.println("k:" + k);
+				System.out.println("Begin classifying");
+				EvaluationResult result = ClassifierControl
+						.getInstance()
+						.doClassification(train_file, test_file, k, weight_type);
+				outputarea.setText(result.toString());
+			}
+		});
 
-		inputPanel.add(trainfcbutton, new Dimension(10, 20));
-		inputPanel.add(testfcbutton, new Dimension(60, 20));
+		inputPanel.add(trainfcbutton);
+		inputPanel.add(testfcbutton);
+		inputPanel.add(klabel);
+		inputPanel.add(kinput);
+		inputPanel.add(new JLabel("Weight type:"));
+		inputPanel.add(weightchooser);
+		inputPanel.add(startbutton);
+
+		outputarea = new JTextArea(50, 60);
+
+		JScrollPane pScroll = new JScrollPane(outputarea,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		this.add(inputPanel, BorderLayout.NORTH);
+		this.add(pScroll, BorderLayout.CENTER);
 		this.setVisible(true);
 	}
 
