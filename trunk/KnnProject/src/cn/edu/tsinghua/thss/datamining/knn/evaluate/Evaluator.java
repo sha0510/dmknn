@@ -37,7 +37,7 @@ public class Evaluator {
 
 		}
 		EvaluationResult result = new EvaluationResult(confusion_matrix,
-				testset.getSize());
+				testset);
 		return result;
 	}
 }
