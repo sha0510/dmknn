@@ -5,15 +5,38 @@ import java.util.Vector;
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
 import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
 
+/**
+ * Defines the KNN classifier.
+ * 
+ * @author Wang Yue, Han Lu
+ * 
+ */
 public abstract class ClassifierKnn {
+	/** the number of neighbors */
 	private int k;
+	/** the training set */
 	protected DataSet trainingset;
+	/**
+	 * the type of distance weighting: WEIGHT_NONE,WEIGHT_INVERSE, or
+	 * WEIGHT_SIMILARITY
+	 */
 	private int weight_type;
 
+	/** No distance weighting */
 	public static final int WEIGHT_NONE = 1;
+	/** weight = 1/distance */
 	public static final int WEIGHT_INVERSE = 2;
+	/** weight = 1-distance(Needs normalization) */
 	public static final int WEIGHT_SIMILARITY = 3;
 
+	/**
+	 * Instantiates a KNN classifier.
+	 * 
+	 * @param k
+	 *            the number of neighbors
+	 * @param trainingset
+	 *            the training dataset
+	 */
 	public ClassifierKnn(int k, DataSet trainingset) {
 		if (k <= 0)
 			throw new IllegalArgumentException("K must be greater than zero!");
@@ -23,6 +46,13 @@ public abstract class ClassifierKnn {
 		this.weight_type = WEIGHT_NONE;
 	}
 
+	/**
+	 * Classifies a new instance.
+	 * 
+	 * @param newinstance
+	 *            a new instance to classify
+	 * @return the class the new instance belongs to
+	 */
 	public abstract double classifyNewInstance(Instance newinstance);
 
 	public Vector<Instance> getNearestNeighbours(Instance newinstance) {
@@ -58,6 +88,15 @@ public abstract class ClassifierKnn {
 		return neighbors;
 	}
 
+	/**
+	 * Caculate the distance between two distinct instances
+	 * 
+	 * @param a
+	 *            an instance
+	 * @param b
+	 *            another instance
+	 * @return the distance between the two
+	 */
 	protected double getDistance(Instance a, Instance b) {
 		int attr_num = trainingset.getFeatures().size();
 		double distance = 0;
@@ -69,14 +108,31 @@ public abstract class ClassifierKnn {
 		return Math.sqrt(distance);
 	}
 
+	/**
+	 * Get the training dataset
+	 * 
+	 * @return the training set
+	 */
 	public DataSet getTrainingset() {
 		return trainingset;
 	}
 
+	/**
+	 * Set the training dataset
+	 * 
+	 * @param trainingset
+	 *            the training set
+	 */
 	public void setTrainingset(DataSet trainingset) {
 		this.trainingset = trainingset;
 	}
 
+	/**
+	 * Set the type of distance weighting
+	 * 
+	 * @param weightType
+	 *            the type of distance weighting
+	 */
 	public void setWeight_type(int weightType) {
 		this.weight_type = weightType;
 	}

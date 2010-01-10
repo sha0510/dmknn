@@ -23,14 +23,25 @@ import cn.edu.tsinghua.thss.datamining.knn.control.ClassifierControl;
 import cn.edu.tsinghua.thss.datamining.knn.core.ClassifierKnn;
 import cn.edu.tsinghua.thss.datamining.knn.evaluate.EvaluationResult;
 
+/**
+ * The GUI Frame.
+ * 
+ * @author Wang Yue,Han Lu
+ * 
+ */
 public class KnnFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
+	/** the training file chooser */
 	private JFileChooser trainfc;
+	/** the testing file chooser */
 	private JFileChooser testfc;
+	/** the input field of number of neighbors */
 	private JTextField kinput;
+	/** the combo box to choose weighting type */
 	private JComboBox weightchooser;
+	/** the output area */
 	private JTextArea outputarea;
 
 	private String train_file;

@@ -7,12 +7,38 @@ import cn.edu.tsinghua.thss.datamining.knn.evaluate.EvaluationResult;
 import cn.edu.tsinghua.thss.datamining.knn.evaluate.Evaluator;
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
 
+/**
+ * A simple control class to pass the classifying arguments to the backend and
+ * return the classification result to the frontend.
+ * 
+ * @author Wang Yue
+ * 
+ */
 public class ClassifierControl {
 
+	/**
+	 * Gets an instance.
+	 * 
+	 * @return an instance of this class
+	 */
 	public static ClassifierControl getInstance() {
 		return new ClassifierControl();
 	}
 
+	/**
+	 * Trains a classifier ,test it with the test set and gets the evaluation
+	 * result
+	 * 
+	 * @param train_file
+	 *            the absolute path of the training file
+	 * @param test_file
+	 *            the absolute path of the testing file
+	 * @param k
+	 *            the classifying argument k
+	 * @param weight_type
+	 *            the type of distance weighting
+	 * @return
+	 */
 	public EvaluationResult doClassification(String train_file,
 			String test_file, int k, int weight_type) {
 		ArffTransformer arffTrans = new ArffTransformer(train_file);
