@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.thss.datamining.knn.evaluate;
 
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
@@ -76,6 +77,14 @@ public class EvaluationResult {
 			for (int j = 0; j < matrix_size; j++)
 				temp_sum += matrix[i][j];
 			recall[i] = matrix[i][i] / temp_sum;
+		}
+
+		// Compute FP Rate
+		for (int i = 0; i < matrix_size; i++) {
+			double temp_sum = 0;
+			for (int j = 0; j < matrix_size; j++)
+				temp_sum += matrix[j][i];
+			fp_rate[i] = (temp_sum - matrix[i][i]) / temp_sum;
 		}
 
 		// Compute precision
@@ -169,29 +178,34 @@ public class EvaluationResult {
 	}
 
 	public String toString() {
+		DecimalFormat threePlaces = new DecimalFormat("0.000");
+
 		StringBuffer text = new StringBuffer("");
 		text.append("=== Evaluation on test set ===\n");
 		text.append("Correctly classified instances\t" + tp_total + "\t"
-				+ accuracy * 100 + "%\n");
+				+ threePlaces.format(accuracy * 100) + "%\n");
 		text.append("Inorrectly classified instances\t"
-				+ (dataset_size - tp_total) + "\t" + (100 - accuracy * 100)
-				+ "%\n");
+				+ (dataset_size - tp_total) + "\t"
+				+ threePlaces.format(100 - accuracy * 100) + "%\n");
 
 		text.append("===Detailed accuracy by class===\n");
 		Vector<String> classes = dataset.getTarget().getAttribute_values();
-		text.append("TP Rate \t FP Rate \t Precision \t Recall \t Class\n");
+		text.append("TP Rate  FP Rate  Precision  Recall  Class\n");
 		for (int i = 0; i < matrix_size; i++)
-			text.append(tp_rate[i] + "\t" + fp_rate[i] + "\t" + precision[i]
-					+ "\t" + recall[i] + "\t" + classes.get(i) + "\n");
+			text.append(threePlaces.format(tp_rate[i]) + "\t"
+					+ threePlaces.format(fp_rate[i]) + "\t"
+					+ threePlaces.format(precision[i]) + "\t"
+					+ threePlaces.format(recall[i]) + "\t" + classes.get(i)
+					+ "\n");
 
 		text.append("=== Confusion Matrix ===\n");
 		for (int i = 0; i < matrix_size; i++)
-			text.append(('a' + i) + "\t");
+			text.append((char) ('a' + i) + "\t");
 		text.append("<-- classified as\n");
 		for (int i = 0; i < matrix_size; i++) {
 			for (int j = 0; j < matrix_size; j++)
 				text.append(matrix[i][j] + "\t");
-			text.append(('a' + i) + "=" + classes.get(i) + "\n");
+			text.append((char) ('a' + i) + "=" + classes.get(i) + "\n");
 		}
 
 		return text.toString();
