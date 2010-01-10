@@ -26,8 +26,6 @@ public abstract class ClassifierKnn {
 	public static final int WEIGHT_NONE = 1;
 	/** weight = 1/distance */
 	public static final int WEIGHT_INVERSE = 2;
-	/** weight = 1-distance(Needs normalization) */
-	public static final int WEIGHT_SIMILARITY = 3;
 
 	/**
 	 * Instantiates a KNN classifier.
@@ -137,4 +135,17 @@ public abstract class ClassifierKnn {
 		this.weight_type = weightType;
 	}
 
+	/**
+	 * Get weight value
+	 */
+	public double getWeight(double distance) {
+		if (weight_type == WEIGHT_NONE)
+			return 1;
+		else {
+			if (distance == 0)
+				return Double.NaN;
+			else
+				return 1 / distance;
+		}
+	}
 }

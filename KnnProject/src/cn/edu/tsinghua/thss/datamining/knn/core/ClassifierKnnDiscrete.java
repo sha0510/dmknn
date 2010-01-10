@@ -30,20 +30,27 @@ public class ClassifierKnnDiscrete extends ClassifierKnn {
 	public double classifyNewInstance(Instance newinstance) {
 		Vector<Instance> nearestNeighbours = getNearestNeighbours(newinstance);
 		int label_num = trainingset.getTarget().getAttribute_values().size();
-		int[] label_count = new int[label_num];
+		double[] weights = new double[label_num];
 		for (int i = 0; i < label_num; i++)
-			label_count[i] = 0;
+			weights[i] = 0;
 		for (int i = 0; i < nearestNeighbours.size(); i++) {
-			int label = (int) (nearestNeighbours.get(i).getLabel());
-			label_count[label]++;
+			Instance neighbor = nearestNeighbours.get(i);
+			int label = (int) (neighbor.getLabel());
+			weights[label] += getWeight(getDistance(neighbor, newinstance));
+			System.out.println(weights[label]);
 		}
-		int max = 0;
+		double max = 0;
 		int max_label = -1;
-		for (int i = 0; i < label_num; i++)
-			if (label_count[i] > max) {
-				max = label_count[i];
+		for (int i = 0; i < label_num; i++){
+			if(Double.isNaN(weights[i])){
+				max_label = i;
+				break;
+			}
+			if (weights[i] > max) {
+				max = weights[i];
 				max_label = i;
 			}
+		}
 
 		if (max_label == -1)
 			System.out.println("Error occurred!");

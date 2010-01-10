@@ -112,8 +112,6 @@ public class KnnFrame extends JFrame implements ActionListener {
 					weight_type = ClassifierKnn.WEIGHT_NONE;
 				else if (type_str.equals("Inverse"))
 					weight_type = ClassifierKnn.WEIGHT_INVERSE;
-				else
-					weight_type = ClassifierKnn.WEIGHT_SIMILARITY;
 			}
 		});
 		JButton startbutton = new JButton("Start");
