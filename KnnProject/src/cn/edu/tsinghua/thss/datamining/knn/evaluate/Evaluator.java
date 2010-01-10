@@ -30,6 +30,7 @@ public class Evaluator {
 			double label_check = instance.getLabel();
 			int label_class = target_attribute.getLabelClass(label);
 			int check_class = target_attribute.getLabelClass(label_check);
+			System.out.println("Label:" + label + "VS" + label_check);
 			if (label_class == check_class)
 				confusion_matrix[label_class][label_class]++;
 			else
