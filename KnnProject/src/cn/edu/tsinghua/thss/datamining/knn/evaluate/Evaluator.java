@@ -16,6 +16,7 @@ public class Evaluator {
 	public Evaluator(ClassifierKnn classifier, DataSet testset) {
 		this.classifier = classifier;
 		this.testset = testset;
+		testset.replaceMissingValues();
 		target_attribute = testset.getTarget();
 		label_num = target_attribute.getLabelNum();
 		confusion_matrix = new int[label_num][label_num];

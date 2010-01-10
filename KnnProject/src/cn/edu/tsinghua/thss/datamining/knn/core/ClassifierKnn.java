@@ -30,26 +30,30 @@ public abstract class ClassifierKnn {
 		Vector<Double> distances = new Vector<Double>();
 		for (Instance instance : trainingset.getInstances()) {
 			double distance = getDistance(instance, newinstance);
-			System.out.println("Distance:" + distance);
-			if (neighbors.size() == 0) {
+			for (int i = 0; i < neighbors.size(); i++) {
+				if (distances.get(i) > distance) {
+					neighbors.insertElementAt(instance, i);
+					distances.insertElementAt(distance, i);
+					break;
+				}
+			}
+			if (neighbors.size() < k) {
 				neighbors.add(instance);
 				distances.add(distance);
-			} else {
-				for (int i = 0; i < neighbors.size(); i++) {
-					if (distances.get(i) > distance) {
-						neighbors.insertElementAt(instance, i);
-						distances.insertElementAt(distance, i);
-					}
-					if (neighbors.size() > k)
-						neighbors.remove(neighbors.size() - 1);
-				}
+			}
+			if (neighbors.size() > k) {
+				neighbors.remove(k);
+				distances.remove(k);
 			}
 		}
 
 		System.out.println("Instance:" + newinstance);
 		System.out.println("Neighbors:");
-		for (Instance neighbor : neighbors)
-			System.out.println(neighbor);
+		for (int i = 0; i < k; i++) {
+			Instance neighbor = neighbors.get(i);
+			System.out.println(trainingset.getInstances().indexOf(neighbor)
+					+ ":" + distances.get(i) + neighbor.toString());
+		}
 
 		return neighbors;
 	}
