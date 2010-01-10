@@ -1,5 +1,9 @@
 package cn.edu.tsinghua.thss.datamining.knn.evaluate;
 
+import java.util.Vector;
+
+import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
+
 /**
  * Defines the result of the evaluation, which contains the classification
  * accuracy, the true positive rates, false positive rates, recall and
@@ -9,15 +13,32 @@ package cn.edu.tsinghua.thss.datamining.knn.evaluate;
  * 
  */
 public class EvaluationResult {
-	private int matrix_size;
+	/** the confusion matrix */
 	private int[][] matrix;
+
+	/** the dimension size of the matrix */
+	private int matrix_size;
+
+	/** the test set */
+	private DataSet dataset;
 	private int dataset_size;
+
+	/** the true positive rates */
 	private double[] tp_rate;
+
+	/** the false positive rates */
 	private double[] fp_rate;
+
+	/** the precision */
 	private double[] precision;
+
+	/** the recall */
 	private double[] recall;
 
+	/** the number of correctly classified instances */
 	private int tp_total;
+
+	/** the classification accuracy on the test set */
 	private double accuracy;
 
 	/**
@@ -28,9 +49,10 @@ public class EvaluationResult {
 	 * @param dataset_size
 	 *            the size of the test set
 	 */
-	public EvaluationResult(int[][] confusionMatrix, int dataset_size) {
+	public EvaluationResult(int[][] confusionMatrix, DataSet dataset) {
 		this.matrix = confusionMatrix;
-		this.dataset_size = dataset_size;
+		this.dataset = dataset;
+		dataset_size = dataset.getSize();
 		matrix_size = matrix[0].length;
 		recall = tp_rate = new double[matrix_size];
 		fp_rate = new double[matrix_size];
@@ -144,5 +166,33 @@ public class EvaluationResult {
 	 */
 	public int getTp_total() {
 		return tp_total;
+	}
+
+	public String toString() {
+		StringBuffer text = new StringBuffer("");
+		text.append("=== Evaluation on test set ===\n");
+		text.append("Correctly classified instances\t" + tp_total + "\t"
+				+ accuracy * 100 + "%\n");
+		text.append("Inorrectly classified instances\t"
+				+ (dataset_size - tp_total) + "\t" + (100 - accuracy * 100)
+				+ "%\n");
+
+		Vector<String> classes = dataset.getTarget().getAttribute_values();
+		text.append("TP Rate \t FP Rate \t Precision \t Recall \t Class\n");
+		for (int i = 0; i < matrix_size; i++)
+			text.append(tp_rate[i] + "\t" + fp_rate[i] + "\t" + precision[i]
+					+ "\t" + recall[i] + "\t" + classes.get(i) + "\n");
+
+		text.append("=== Confusion Matrix ===");
+		for (int i = 0; i < matrix_size; i++)
+			text.append(('a' + i) + "\t");
+		text.append("<-- classified as\n");
+		for (int i = 0; i < matrix_size; i++) {
+			for (int j = 0; j < matrix_size; j++)
+				text.append(matrix[i][j] + "\t");
+			text.append(('a' + i) + "=" + classes.get(i) + "\n");
+		}
+
+		return text.toString();
 	}
 }
