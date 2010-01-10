@@ -18,8 +18,6 @@ public class ArffTransformer {
 	}
 
 	public DataSet getDatasetFromFile() {
-
-		// Needs implementation here.
 		Vector<Attribute> attributes = new Vector<Attribute>();
 		try {
 			FileReader fr = new FileReader(file_path);

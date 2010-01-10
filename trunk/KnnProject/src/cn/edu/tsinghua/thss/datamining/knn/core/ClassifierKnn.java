@@ -9,10 +9,10 @@ public abstract class ClassifierKnn {
 	private int k;
 	protected DataSet trainingset;
 	private int weight_type;
-	
-	public static final int WEIGHT_NONE=1;
-	public static final int WEIGHT_INVERSE=2;
-	public static final int WEIGHT_SIMILARITY=3;
+
+	public static final int WEIGHT_NONE = 1;
+	public static final int WEIGHT_INVERSE = 2;
+	public static final int WEIGHT_SIMILARITY = 3;
 
 	public ClassifierKnn(int k, DataSet trainingset) {
 		if (k <= 0)
@@ -20,25 +20,36 @@ public abstract class ClassifierKnn {
 		this.k = k;
 		this.trainingset = trainingset;
 		trainingset.replaceMissingValues();
-		this.weight_type=WEIGHT_NONE;
+		this.weight_type = WEIGHT_NONE;
 	}
 
-	public abstract double classifyNewInstance(Instance newinstance) ;
+	public abstract double classifyNewInstance(Instance newinstance);
 
 	public Vector<Instance> getNearestNeighbours(Instance newinstance) {
 		Vector<Instance> neighbors = new Vector<Instance>();
 		Vector<Double> distances = new Vector<Double>();
 		for (Instance instance : trainingset.getInstances()) {
 			double distance = getDistance(instance, newinstance);
-			for (int i = 0; i < neighbors.size(); i++) {
-				if (distances.get(i) > distance) {
-					neighbors.insertElementAt(newinstance, i);
-					distances.insertElementAt(distance, i);
+			System.out.println("Distance:" + distance);
+			if (neighbors.size() == 0) {
+				neighbors.add(instance);
+				distances.add(distance);
+			} else {
+				for (int i = 0; i < neighbors.size(); i++) {
+					if (distances.get(i) > distance) {
+						neighbors.insertElementAt(instance, i);
+						distances.insertElementAt(distance, i);
+					}
+					if (neighbors.size() > k)
+						neighbors.remove(neighbors.size() - 1);
 				}
-				if (neighbors.size() > k)
-					neighbors.remove(neighbors.size() - 1);
 			}
 		}
+
+		System.out.println("Instance:" + newinstance);
+		System.out.println("Neighbors:");
+		for (Instance neighbor : neighbors)
+			System.out.println(neighbor);
 
 		return neighbors;
 	}

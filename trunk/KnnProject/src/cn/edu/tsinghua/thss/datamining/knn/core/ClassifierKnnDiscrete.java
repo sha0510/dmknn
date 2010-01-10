@@ -18,7 +18,7 @@ public class ClassifierKnnDiscrete extends ClassifierKnn {
 		int[] label_count = new int[label_num];
 		for (int i = 0; i < label_num; i++)
 			label_count[i] = 0;
-		for (int i = 0; i < nearestNeighbours.size() - 1; i++) {
+		for (int i = 0; i < nearestNeighbours.size(); i++) {
 			int label = (int) (nearestNeighbours.get(i).getLabel());
 			label_count[label]++;
 		}
@@ -30,6 +30,8 @@ public class ClassifierKnnDiscrete extends ClassifierKnn {
 				max_label = i;
 			}
 
+		if (max_label == -1)
+			System.out.println("Error occurred!");
 		return max_label;
 	}
 
