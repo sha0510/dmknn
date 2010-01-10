@@ -5,8 +5,23 @@ import java.util.Vector;
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
 import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
 
+/**
+ * Defines the KNN classifier that deals with instances with a discrete-valued
+ * label.
+ * 
+ * @author Wang Yue
+ * 
+ */
 public class ClassifierKnnDiscrete extends ClassifierKnn {
 
+	/**
+	 * The constructor
+	 * 
+	 * @param k
+	 *            the number of neighbors
+	 * @param trainingset
+	 *            the training set
+	 */
 	public ClassifierKnnDiscrete(int k, DataSet trainingset) {
 		super(k, trainingset);
 	}
