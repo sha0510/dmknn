@@ -17,7 +17,7 @@ public class TestEvaluator {
 		DataSet trainingset = arffTrans.getDatasetFromFile();
 		arffTrans = new ArffTransformer("c:/test.arff");
 		DataSet testset = arffTrans.getDatasetFromFile();
-		classifier = new ClassifierKnnDiscrete(3, trainingset);
+		classifier = new ClassifierKnnDiscrete(1, trainingset);
 		evaluator = new Evaluator(classifier, testset);
 	}
 

@@ -177,13 +177,14 @@ public class EvaluationResult {
 				+ (dataset_size - tp_total) + "\t" + (100 - accuracy * 100)
 				+ "%\n");
 
+		text.append("===Detailed accuracy by class===\n");
 		Vector<String> classes = dataset.getTarget().getAttribute_values();
 		text.append("TP Rate \t FP Rate \t Precision \t Recall \t Class\n");
 		for (int i = 0; i < matrix_size; i++)
 			text.append(tp_rate[i] + "\t" + fp_rate[i] + "\t" + precision[i]
 					+ "\t" + recall[i] + "\t" + classes.get(i) + "\n");
 
-		text.append("=== Confusion Matrix ===");
+		text.append("=== Confusion Matrix ===\n");
 		for (int i = 0; i < matrix_size; i++)
 			text.append(('a' + i) + "\t");
 		text.append("<-- classified as\n");
