@@ -77,4 +77,8 @@ public abstract class ClassifierKnn {
 		this.trainingset = trainingset;
 	}
 
+	public void setWeight_type(int weightType) {
+		this.weight_type = weightType;
+	}
+
 }
