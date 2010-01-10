@@ -1,5 +1,7 @@
 package cn.edu.tsinghua.thss.datamining.knn.core;
 
+import java.util.Vector;
+
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
 import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
 
@@ -18,8 +20,11 @@ public class ClassifierKnnContinuous extends ClassifierKnn {
 
 	@Override
 	public double classifyNewInstance(Instance newinstance) {
-		// TODO Auto-generated method stub
-		return 0;
+		Vector<Instance> nearestNeighbours = getNearestNeighbours(newinstance);
+		double sum = 0;
+		for (Instance neighbor : nearestNeighbours)
+			sum += neighbor.getLabel();
+		return sum / trainingset.getSize();
 	}
 
 }
