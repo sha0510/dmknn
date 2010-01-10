@@ -4,14 +4,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import cn.edu.tsinghua.thss.datamining.knn.model.DataSet;
-import cn.edu.tsinghua.thss.datamining.knn.model.Instance;
 
 public class TestClassiferKnn {
 	private static ClassifierKnn classifier;
 
 	@BeforeClass
 	public static void setUpBeforClass() {
-		ArffTransformer arffTrans = new ArffTransformer("c:/training.arff");
+		ArffTransformer arffTrans = new ArffTransformer("c:/train.arff");
 		DataSet ds = arffTrans.getDatasetFromFile();
 		classifier = new ClassifierKnnDiscrete(1, ds);
 	}
